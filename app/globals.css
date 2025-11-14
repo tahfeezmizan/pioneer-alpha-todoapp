@@ -120,6 +120,11 @@ body {
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
+.todos{
+  border-width: 10px;
+  border-bottom: 2px solid green;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

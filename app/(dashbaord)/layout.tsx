@@ -7,9 +7,9 @@ export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider className="">
       <AppSidebar />
-      <main className="w-full bg-blue-100">
+      <main className="w-full bg-blue-100/60 ">
         <DashboardTopbar />
-        <div className="p-10">{children}</div>
+        <div className="p-10 px-20">{children}</div>
       </main>
     </SidebarProvider>
   );

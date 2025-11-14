@@ -38,8 +38,8 @@ const data = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar variant="inset" {...props} className="border-r">
-      <SidebarHeader>
+    <Sidebar variant="inset" {...props} className="border-r bg-[#0D224A] p-0">
+      <SidebarHeader className="bg-[#0D224A]">
         <SidebarMenu>
           <SidebarMenuItem className="py-10">
             <SidebarMenuButton
@@ -66,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="">
+      <SidebarContent className="bg-[#0D224A] ">
         <div className="flex flex-col">
           {data?.map((item) => {
             const Icon = item.icon as React.ComponentType<any>;
@@ -74,9 +74,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Link
                 href={item.link}
                 key={item.id}
-                className="flex items-center gap-2 py-2 px-3 rounded-md"
+                className="flex items-center gap-2 text-base py-4 px-3 bg-green-400 hover:bg-blue-950  text-white"
               >
-                <Icon className="size-4" />
+                <Icon className="size-6" />
                 <span>{item.label}</span>
               </Link>
             );
@@ -86,10 +86,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="bg-[#0D224A]">
         {/* <NavUser user={data.user} /> */}
-        <LogOut />
-        Logout
+        <div className="flex items-center justify-start gap-4 border">
+          <LogOut />
+          Logout
+        </div>
       </SidebarFooter>
     </Sidebar>
   );
