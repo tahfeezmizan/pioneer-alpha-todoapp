@@ -51,7 +51,6 @@ export function SignupSection() {
           <Image
             src={require("@/assets/sign-up-img.png")}
             alt="sign up image"
-
           />
         </div>
       </div>
