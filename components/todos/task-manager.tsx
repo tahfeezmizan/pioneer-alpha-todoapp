@@ -5,6 +5,7 @@ import { Search, Plus, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { AddTaskModal } from "./modules/add-tasks-modal";
 
 interface FilterOption {
   id: string;
@@ -21,6 +22,7 @@ const dateFilterOptions: FilterOption[] = [
 export function TaskManager() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const handleFilterChange = (filterId: string) => {
@@ -30,6 +32,8 @@ export function TaskManager() {
         : [...prev, filterId]
     );
   };
+
+ 
 
   return (
     <div className="">
@@ -212,7 +216,7 @@ export function TaskManager() {
             </svg>
           </div>
 
-            {/* Empty State Text */}
+          {/* Empty State Text */}
           <h3 className="text-2xl font-semibold text-gray-800 text-center">
             No todos yet
           </h3>
