@@ -1,13 +1,14 @@
 "use client";
 
+import { useSignUpMutation } from "@/redux/api/authApi";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface SignupFormData {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -16,6 +17,7 @@ interface SignupFormData {
 export function SignupSection() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [signUp, { isLoading }] = useSignUpMutation({});
 
   const {
     register,
@@ -26,8 +28,8 @@ export function SignupSection() {
   } = useForm<SignupFormData>({
     mode: "onBlur",
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -36,18 +38,28 @@ export function SignupSection() {
 
   const password = watch("password");
 
-  const onSubmit = (data: SignupFormData) => {
+  const onSubmit = async (data: SignupFormData) => {
     console.log("Signup data:", data);
-    alert("Account created successfully!");
-    reset();
+
+    try {
+      const res = await signUp({
+        first_name: data?.first_name,
+        last_name: data?.last_name,
+        email: data?.email,
+        password: data?.password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // reset();
   };
 
   return (
     <section className="min-h-screen bg-white flex">
-      {/* Left side - Illustration */}
+      {/* Left side */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#E2ECF8] items-center justify-center p-8">
         <div className="flex flex-col items-center gap-6">
-          {/* Illustration placeholder */}
           <Image
             src={require("@/assets/sign-up-img.png")}
             alt="sign up image"
@@ -71,16 +83,15 @@ export function SignupSection() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* First Name and Last Name - Two columns on larger screens */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* First Name */}
               <div>
                 <label
-                  htmlFor="firstName"
+                  htmlFor="first_name"
                   className="block text-sm font-semibold text-slate-900 mb-2"
                 >
                   First Name
                 </label>
                 <input
-                  {...register("firstName", {
+                  {...register("first_name", {
                     required: "First name is required",
                     pattern: {
                       value: /^[a-zA-Z\s]+$/,
@@ -92,27 +103,26 @@ export function SignupSection() {
                     },
                   })}
                   type="text"
-                  id="firstName"
+                  id="first_name"
                   placeholder="name.Platform"
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-400"
                 />
-                {errors.firstName && (
+                {errors.first_name && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.firstName.message}
+                    {errors.first_name.message}
                   </p>
                 )}
               </div>
 
-              {/* Last Name */}
               <div>
                 <label
-                  htmlFor="lastName"
+                  htmlFor="last_name"
                   className="block text-sm font-semibold text-slate-900 mb-2"
                 >
                   Last Name
                 </label>
                 <input
-                  {...register("lastName", {
+                  {...register("last_name", {
                     required: "Last name is required",
                     pattern: {
                       value: /^[a-zA-Z\s]+$/,
@@ -124,19 +134,18 @@ export function SignupSection() {
                     },
                   })}
                   type="text"
-                  id="lastName"
+                  id="last_name"
                   placeholder="name.Platform"
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-400"
                 />
-                {errors.lastName && (
+                {errors.last_name && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.lastName.message}
+                    {errors.last_name.message}
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Email */}
             <div>
               <label
                 htmlFor="email"
@@ -164,7 +173,6 @@ export function SignupSection() {
               )}
             </div>
 
-            {/* Password */}
             <div>
               <label
                 htmlFor="password"
@@ -202,7 +210,6 @@ export function SignupSection() {
               )}
             </div>
 
-            {/* Confirm Password */}
             <div>
               <label
                 htmlFor="confirmPassword"
