@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -49,8 +48,6 @@ body {
   font-family: var(--font-inter);
 }
 
-
-
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -84,6 +81,14 @@ body {
   --sidebar-accent-foreground: hsl(240 5.9% 10%);
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+button {
+  cursor: pointer !important;
 }
 
 .dark {
@@ -120,7 +125,7 @@ body {
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-.todos{
+.todos {
   border-width: 10px;
   border-bottom: 2px solid green;
 }

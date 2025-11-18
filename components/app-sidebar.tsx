@@ -14,14 +14,9 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const data = [
-  {
-    id: 1,
-    label: "Dashboard",
-    link: "dashboard",
-    icon: Home,
-  },
   {
     id: 2,
     label: "Todos",
@@ -37,9 +32,10 @@ const data = [
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname(); // ← get current path
   return (
-    <Sidebar variant="inset" {...props} className="border-r bg-[#0D224A] p-0">
-      <SidebarHeader className="bg-[#0D224A]">
+    <Sidebar variant="inset" {...props} className="border-r bg-[#0D224A] p-0 pb-10 ">
+      <SidebarHeader className="bg-[#0D224A] text-white">
         <SidebarMenu>
           <SidebarMenuItem className="py-10">
             <SidebarMenuButton
@@ -53,9 +49,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   alt="user "
                   width={200}
                   height={200}
-                  className="w-24 h-24 mx-auto border border-red-500 rounded-full"
+                  className="w-24 h-24 mx-auto rounded-full"
                 />
-                <div className="text-center text-black">
+
+                <div className="text-center text-white">
                   <h3 className="text-base font-semibold capitalize">
                     amanuel
                   </h3>
@@ -70,11 +67,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <div className="flex flex-col">
           {data?.map((item) => {
             const Icon = item.icon as React.ComponentType<any>;
+            const isActive = pathname.includes(item.link); // ← detect active
+
             return (
               <Link
                 href={item.link}
                 key={item.id}
-                className="flex items-center gap-2 text-base py-4 px-3 bg-green-400 hover:bg-blue-950  text-white"
+                className={`flex items-center gap-2 text-base py-4 px-6 text-white transition-all ${
+                  isActive
+                    ? "bg-gradient-to-r from-[#1d3574] to-transparent"
+                    : ""
+                }`}
               >
                 <Icon className="size-6" />
                 <span>{item.label}</span>
@@ -82,13 +85,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             );
           })}
         </div>
-        {/* <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
-      <SidebarFooter className="bg-[#0D224A]">
+      <SidebarFooter className="bg-[#0D224A]" >
         {/* <NavUser user={data.user} /> */}
-        <div className="flex items-center justify-start gap-4 border">
+        <div className="flex items-center justify-start gap-4 px-6 font-medium text-[#8CA3CD]">
           <LogOut />
           Logout
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useLoginUserMutation } from "@/redux/api/authApi";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -29,12 +30,23 @@ export default function LogInSection() {
     },
   });
 
-  const password = watch("password");
+  // const password = watch("password");
+  const [login] = useLoginUserMutation({});
 
-  const onSubmit = (data: SignupFormData) => {
+  const onSubmit = async (data: SignupFormData) => {
     console.log("Signup data:", data);
-    alert("Account created successfully!");
-    reset();
+
+    try {
+      const res = await login({
+        email: data?.email,
+        password: data?.password,
+      });
+      console.log(res)
+    } catch (error) {
+      console.log(error);
+    }
+
+    // reset();
   };
 
   return (
@@ -43,19 +55,16 @@ export default function LogInSection() {
       <div className="hidden lg:flex lg:w-1/2 bg-[#E2ECF8] items-center justify-center p-8">
         <div className="flex flex-col items-center gap-6">
           {/* Illustration placeholder */}
-          <Image
-            src={require("@/assets/sign-up-img.png")}
-            alt="sign up image"
-          />
+          <Image src={require("@/assets/log-in-img.png")} alt="sign up image" />
         </div>
       </div>
 
       {/* Right side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-8 lg:p-12">
         <div className="w-full max-w-md">
-          <div className="mb-8">
+          <div className="mb-8 text-center">
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">
-              Create your account
+              Log in to your account
             </h1>
             <p className="text-slate-600 text-sm sm:text-base">
               Start managing your tasks efficiently
@@ -162,7 +171,7 @@ export default function LogInSection() {
             <span className="text-slate-600 text-sm">
               Don’t have an account?{" "}
               <a
-                href="#login"
+                href="/sign-up"
                 className="text-blue-500 hover:text-blue-700 font-semibold"
               >
                 Register now
